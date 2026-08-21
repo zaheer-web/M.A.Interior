@@ -3,9 +3,9 @@ import { Award, Users } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import img1 from "../img/Landscape/na4.jpeg";
+import img1 from "../img/Landscape/n21.jpeg";
 import img2 from "../img/new/n32.jpeg"; 
-import img3 from "../img/Urban/n35.jpeg";
+import img3 from "../img/Urban/n37.jpeg";
 
 gsap.registerPlugin(ScrollTrigger);
 
