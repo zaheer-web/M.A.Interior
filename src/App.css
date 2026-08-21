@@ -1,0 +1,20 @@
+@import "tailwindcss";
+body{
+font-family:'Poppins', sans-serif;
+}
+
+.heading-font{
+font-family:'Playfair Display', serif;
+}
+.custom-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: #555;
+  opacity: 1;
+  margin: 0 6px !important;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background: #facc15;
+  transform: scale(1.3);
+}
