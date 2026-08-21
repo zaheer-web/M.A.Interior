@@ -72,7 +72,7 @@ try{
 setLoading(true)
 
 await axios.post(
-"http://localhost:5000/api/ma-architect/contact",
+"https://interior-backend-rp7p.onrender.com/api/ma-architect/contact",
 formData
 )
 

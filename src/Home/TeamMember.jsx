@@ -6,10 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // Point this at your backend, e.g. via an env var:
-// VITE_API_URL=http://localhost:5000/api  (Vite)
-// REACT_APP_API_URL=http://localhost:5000/api  (CRA)
+// VITE_API_URL=https://interior-backend-rp7p.onrender.com/api  (Vite)
+// REACT_APP_API_URL=https://interior-backend-rp7p.onrender.com/api  (CRA)
 const API_URL =
-  import.meta?.env?.VITE_API_URL || "http://localhost:5000/api";
+  import.meta?.env?.VITE_API_URL || "https://interior-backend-rp7p.onrender.com/api";
 
 export default function TeamSection() {
   const sectionRef = useRef(null);

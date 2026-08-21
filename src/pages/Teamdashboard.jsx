@@ -16,7 +16,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
  * Adjust these two calls if your contactRoutes.js uses different paths.
  */
 
-const DEFAULT_API_URL = "http://localhost:5000/api";
+const DEFAULT_API_URL = "https://interior-backend-rp7p.onrender.com/api";
 
 function escapeHtml(str) {
   const div = document.createElement("div");
@@ -435,7 +435,7 @@ export default function TeamDashboard() {
                   type="text"
                   value={apiUrlInput}
                   onChange={(e) => setApiUrlInput(e.target.value)}
-                  placeholder="http://localhost:5000/api"
+                  placeholder="https://interior-backend-rp7p.onrender.com/api"
                 />
                 <button className="btn btn-small btn-primary" onClick={saveApiUrl}>
                   Save
