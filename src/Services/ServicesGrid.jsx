@@ -10,20 +10,18 @@ import im3 from "../img/Landscape/na4.jpeg"
 import im4 from "../img/Urban/n35.jpeg"
 
 const services = [
+    {
+title: "Urbanism",
+icon: <FaCity />,
+image: im4,
+desc: "Urbanism is more than just city planning; it's about shaping communities. Our team specializes in Urban Design, Planning, and Regeneration, recognizing the unique skills these projects demand. We believe in the transformative power of Urbanism to benefit communities at large, driving our dedication to excellence in this field."
+},
 {
 title: "Interior Design",
 icon: <FaCouch />,
 image: im1,
 desc: "Interior design is not just about decoration; it's about creating a cohesive and functional space. Our philosophy is centered around using interior design as a tool to enhance the aesthetics and functionality of any space, regardless of its size. Whether it's small, compact area or a large, expansive space, we aim to make every interior lively and comfortable."
 },
-
-{
-title: "3D Visualization",
-icon: <Md3dRotation />,
-image: im2,
-desc: "3D visualization is crucial for understanding a project comprehensively. We believe it offers unique satisfaction to both clients and our team. With skilled 3D visualizers dedicated to delivering the best results, we ensure that our clients can visualize their projects with clarity and confidence."
-},
-
 {
 title: "Landscape Design",
 icon: <FaTree />,
@@ -32,11 +30,15 @@ desc: "Landscape design is the soul of our built environment. We believe that sp
 },
 
 {
-title: "Urbanism",
-icon: <FaCity />,
-image: im4,
-desc: "Urbanism is more than just city planning; it's about shaping communities. Our team specializes in Urban Design, Planning, and Regeneration, recognizing the unique skills these projects demand. We believe in the transformative power of Urbanism to benefit communities at large, driving our dedication to excellence in this field."
+title: "3D Visualization",
+icon: <Md3dRotation />,
+image: im2,
+desc: "3D visualization is crucial for understanding a project comprehensively. We believe it offers unique satisfaction to both clients and our team. With skilled 3D visualizers dedicated to delivering the best results, we ensure that our clients can visualize their projects with clarity and confidence."
 }
+
+
+
+
 
 ]
 

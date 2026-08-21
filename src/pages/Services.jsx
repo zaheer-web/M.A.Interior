@@ -11,8 +11,9 @@ function Services() {
     <div className='overflow-x-hidden'>
     <ServiceHero/>
     <ServicesIntro/>
-    <ServicesGrid/>
     <ServiceShowcase/>
+
+    <ServicesGrid/>
     <ServiceProcess/>
     </div>
     

@@ -20,19 +20,19 @@ const services = [
   },
   {
     number: "02",
+    title: "Urban Planning",
+    path: "/urban-planning",
+    icon: <Map size={28} />,
+    image: urbanPlanning,
+    desc: "Urban planning focuses on building sustainable cities and well designed communities.",
+  },
+  {
+    number: "03",
     title: "Interior Design",
     path: "/interior-design",
     icon: <Sofa size={28} />,
     image: interiorDesign,
     desc: "Interior design creates harmony between furniture, lighting and space to deliver comfortable living environments.",
-  },
-  {
-    number: "03",
-    title: "3D Visualization",
-    path: "/3d-visualization",
-    icon: <Box size={28} />,
-    image: visualization3D,
-    desc: "Our 3D visualization allows clients to see realistic previews of their projects before execution.",
   },
   {
     number: "04",
@@ -44,12 +44,14 @@ const services = [
   },
   {
     number: "05",
-    title: "Urban Planning",
-    path: "/urban-planning",
-    icon: <Map size={28} />,
-    image: urbanPlanning,
-    desc: "Urban planning focuses on building sustainable cities and well designed communities.",
+    title: "3D Visualization",
+    path: "/3d-visualization",
+    icon: <Box size={28} />,
+    image: visualization3D,
+    desc: "Our 3D visualization allows clients to see realistic previews of their projects before execution.",
   },
+  
+  
   {
     number: "06",
     title: "Project Management",
