@@ -189,26 +189,29 @@ export default function Footer() {
             </h3>
 
             <ul className="space-y-3">
+               <li className="hover:text-yellow-500 transition">
+                Architecture
+              </li>
+               <li className="hover:text-yellow-500 transition">
+               Urbanism
+              </li>
+               <li className="hover:text-yellow-500 transition">
+               Interior Design
+              </li>
 
               <li className="hover:text-yellow-500 transition">
                 Landscape Design
               </li>
 
-              <li className="hover:text-yellow-500 transition">
-                Architecture
-              </li>
+             
 
               <li className="hover:text-yellow-500 transition">
                 3D visualisation
               </li>
 
-              <li className="hover:text-yellow-500 transition">
-               Urbanism
-              </li>
+             
 
-              <li className="hover:text-yellow-500 transition">
-               Interior Design
-              </li>
+             
 
             </ul>
 

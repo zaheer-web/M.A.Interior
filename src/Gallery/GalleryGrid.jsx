@@ -49,11 +49,12 @@ import Interior3 from "../img/Interior/ba3.jpeg";
 
 const categories = [
   "All",
-  "Landscape",
   "Architecture",
-  "3D Visualisation",
   "Urbanism",
   "Interior",
+
+  "Landscape",
+  "3D Visualisation",
 
 ];
 
