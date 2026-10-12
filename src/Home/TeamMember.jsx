@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const API_URL =
   import.meta?.env?.VITE_API_URL || "https://interior-backend-rp7p.onrender.com/api";
 
-export default function TeamSection() {
+export default function TeamMember() {
   const sectionRef = useRef(null);
   const [flipped, setFlipped] = useState({});
   const [teamMembers, setTeamMembers] = useState([]);
@@ -147,6 +147,47 @@ export default function TeamSection() {
           border-color: var(--sa-brass);
         }
 
+        /* fade only if the first paragraph is longer than the space */
+        .tm-back-desc {
+          -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 calc(100% - 18px), transparent 100%);
+        }
+
+        /* More button — explicit colors so site/global CSS can't blank it out */
+        .team-section-scope .tm-more-btn {
+          display: flex !important;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          width: 100%;
+          min-height: 46px;
+          padding: 12px 16px;
+          border: 1px solid var(--sa-brass) !important;
+          border-radius: 10px;
+          background: transparent !important;
+          color: var(--sa-brass-light) !important;
+          font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
+          font-size: 12px !important;
+          font-weight: 700;
+          line-height: 1 !important;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: background 0.3s, color 0.3s;
+        }
+        .team-section-scope .tm-more-btn .tm-more-label,
+        .team-section-scope .tm-more-btn svg {
+          color: inherit !important;
+          stroke: currentColor;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+        .team-section-scope .tm-more-btn:hover,
+        .team-section-scope .tm-more-btn:focus-visible {
+          background: var(--sa-brass-light) !important;
+          color: var(--sa-ink) !important;
+        }
+
         /* ---------- PREMIUM PROFILE MODAL ---------- */
         @keyframes tm-overlay-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes tm-modal-in {
@@ -271,10 +312,15 @@ export default function TeamSection() {
             <div className="team-grid mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:mt-16 lg:grid-cols-3 lg:gap-7">
               {teamMembers.map((member) => {
                 const isFlipped = !!flipped[member.id];
+                // first paragraph of the bio (split on blank line, else first line)
+                const firstPara =
+                  (member.description || "")
+                    .trim()
+                    .split(/\n\s*\n|\n/)[0] || "";
                 return (
                   <div
                     key={member.id}
-                    className={`team-card flip-card h-[420px] cursor-pointer sm:h-[440px] ${
+                    className={`team-card flip-card h-[440px] cursor-pointer sm:h-[470px] ${
                       isFlipped ? "is-flipped" : ""
                     }`}
                     onClick={() => toggleFlip(member.id)}
@@ -381,24 +427,50 @@ export default function TeamSection() {
                           style={{ background: "var(--sa-brass)" }}
                         />
 
-                        <p className="line-clamp-3 text-[13px] leading-relaxed text-neutral-300 sm:text-sm">
-                          {member.description}
-                        </p>
+                        {/* first paragraph — shown fully, fades only if it overflows */}
+                        <div className="tm-back-desc min-h-0 flex-1 overflow-hidden">
+                          <p className="whitespace-pre-line text-[13px] leading-[1.7] text-neutral-300 sm:text-sm">
+                            {firstPara}
+                          </p>
+                        </div>
 
-                        <div className="mt-auto pt-4">
+                        {/* skills preview */}
+                        {!!member.skills?.length && (
+                          <div className="mt-3 flex shrink-0 flex-wrap gap-1.5">
+                            {member.skills.slice(0, 3).map((skill) => (
+                              <span
+                                key={skill}
+                                className="sa-mono rounded-full border px-2.5 py-1 text-[9px] uppercase tracking-[0.12em]"
+                                style={{
+                                  borderColor: "rgba(217,189,138,0.4)",
+                                  color: "var(--sa-brass-light)",
+                                }}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                            {member.skills.length > 3 && (
+                              <span
+                                className="sa-mono rounded-full px-2 py-1 text-[9px] tracking-[0.12em]"
+                                style={{ color: "rgba(217,189,138,0.7)" }}
+                              >
+                                +{member.skills.length - 3}
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="relative z-10 shrink-0 pt-4">
                           <button
                             type="button"
                             onClick={(event) => {
                               event.stopPropagation();
                               setSelectedMember(member);
                             }}
-                            className="flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 hover:bg-[#D9BD8A] hover:text-[#14171F]"
-                            style={{
-                              borderColor: "var(--sa-brass)",
-                              color: "var(--sa-brass-light)",
-                            }}
+                            className="tm-more-btn"
                           >
-                            More <ArrowUpRight size={15} />
+                            <span className="tm-more-label">More</span>
+                            <ArrowUpRight size={15} />
                           </button>
                         </div>
                       </div>
