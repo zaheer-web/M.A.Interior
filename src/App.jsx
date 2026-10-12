@@ -16,8 +16,7 @@ import Contact from "./pages/Contact";
 import ContactForm from "./Contact/ContactForm";
 import GallerySection from "./Gallery/GalleryGrid";
 
-/* ADMIN */
-import Dashboard from "../src/adminDeshboard/Dashboard";
+
 
 /* TOAST */
 import { ToastContainer } from "react-toastify";
@@ -29,6 +28,7 @@ import Landscape from "./pages/Landscape";
 import Urban from "./pages/Urban";
 import ProjectManagment from "./pages/ProjectManagment";
 import TeamDashboard from "./pages/Teamdashboard";
+import AdminGate from "../src/adminDeshboard/AdminGate";
 
 
 function App() {
@@ -65,7 +65,14 @@ function App() {
         <Route path="/gallery-grid" element={<GallerySection />} />
 
         {/* ADMIN */}
-        <Route path="/admin" element={<TeamDashboard/>} />
+      <Route
+  path="/admin"
+  element={
+    <AdminGate>
+      <TeamDashboard />
+    </AdminGate>
+  }
+/>
 
       </Routes>
 

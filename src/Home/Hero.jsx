@@ -10,10 +10,13 @@ import im3 from "../img/architecture/n40.jpeg";
 import im4 from "../img//Landscape/na1.jpeg";
 
 const slides = [
-  { src: im1, label: "Urbanism", place: "Riverfront Quarter — Lisbon" },
-  { src: im2, label: "3D Visualization", place: "Casa Lumen — Interior Study" },
   { src: im3, label: "Architecture", place: "Villa Terra — Andalusia" },
+  { src: im2, label: "3D Visualization", place: "Casa Lumen — Interior Study" },
+
   { src: im4, label: "Landscape", place: "Mirror Gardens — Kyoto" },
+  { src: im1, label: "Urbanism", place: "Riverfront Quarter — Lisbon" },
+  
+  
 ];
 
 const words = [
