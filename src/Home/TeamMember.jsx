@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -17,6 +17,7 @@ export default function TeamSection() {
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -47,6 +48,24 @@ export default function TeamSection() {
     fetchTeam();
     return () => controller.abort();
   }, []);
+
+  // modal: close on ESC + lock body scroll while open
+  useEffect(() => {
+    if (!selectedMember) return;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") setSelectedMember(null);
+    };
+    window.addEventListener("keydown", onKey);
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [selectedMember]);
 
   // scroll animations — re-run once real data has rendered cards
   useEffect(() => {
@@ -127,6 +146,55 @@ export default function TeamSection() {
           height: 14px;
           border-color: var(--sa-brass);
         }
+
+        /* ---------- PREMIUM PROFILE MODAL ---------- */
+        @keyframes tm-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes tm-modal-in {
+          from { opacity: 0; transform: translateY(28px) scale(0.96); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes tm-fade-up {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes tm-img-in {
+          from { opacity: 0; transform: scale(1.06); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes tm-line-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        .tm-overlay { animation: tm-overlay-in 0.35s ease-out both; }
+        .tm-modal { animation: tm-modal-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .tm-img { animation: tm-img-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+        .tm-line { transform-origin: left; animation: tm-line-grow 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+        .tm-up-1 { animation: tm-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.20s both; }
+        .tm-up-2 { animation: tm-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
+        .tm-up-3 { animation: tm-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.36s both; }
+        .tm-up-4 { animation: tm-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.44s both; }
+        .tm-up-5 { animation: tm-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.52s both; }
+
+        .tm-modal-shell {
+          height: min(92vh, 720px);
+        }
+        @media (min-width: 768px) {
+          .tm-modal-shell { height: min(86vh, 620px); }
+        }
+
+        /* description area: fits normally, thin scroll only for very long text */
+        .tm-desc {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(168,127,74,0.5) transparent;
+          -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent 100%);
+        }
+        .tm-desc::-webkit-scrollbar { width: 4px; }
+        .tm-desc::-webkit-scrollbar-thumb { background: rgba(168,127,74,0.5); border-radius: 999px; }
+
+        .tm-close { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s, color 0.3s; }
+        .tm-close:hover { transform: rotate(90deg); background: var(--sa-brass-light); color: var(--sa-ink); }
+
+        .tm-chip { transition: background 0.3s, color 0.3s, border-color 0.3s; }
+        .tm-chip:hover { background: var(--sa-ink); color: var(--sa-brass-light); border-color: var(--sa-ink); }
       `}</style>
 
       <div className="team-section-scope">
@@ -313,34 +381,241 @@ export default function TeamSection() {
                           style={{ background: "var(--sa-brass)" }}
                         />
 
-                        <p className="flex-1 overflow-y-auto text-[13px] leading-relaxed text-neutral-300 sm:text-sm">
+                        <p className="line-clamp-3 text-[13px] leading-relaxed text-neutral-300 sm:text-sm">
                           {member.description}
                         </p>
 
-                        <div className="mt-4">
-                          <p
-                            className="sa-mono mb-2 text-[9px] uppercase tracking-[0.2em]"
-                            style={{ color: "var(--sa-brass)" }}
+                        <div className="mt-auto pt-4">
+                          <button
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              setSelectedMember(member);
+                            }}
+                            className="flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition-colors duration-300 hover:bg-[#D9BD8A] hover:text-[#14171F]"
+                            style={{
+                              borderColor: "var(--sa-brass)",
+                              color: "var(--sa-brass-light)",
+                            }}
                           >
-                            Expertise
-                          </p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {member.skills.map((skill) => (
-                              <span
-                                key={skill}
-                                className="sa-mono rounded-full border px-2 py-0.5 text-[9px] tracking-wide text-neutral-300"
-                                style={{ borderColor: "rgba(217,189,138,0.35)" }}
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
+                            More <ArrowUpRight size={15} />
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 );
               })}
+            </div>
+          )}
+
+          {/* FULL TEAM MEMBER PROFILE MODAL — premium redesign */}
+          {selectedMember && (
+            <div
+              className="tm-overlay fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(20,23,31,0.78) 0%, rgba(8,10,15,0.92) 100%)",
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+              }}
+              onClick={() => setSelectedMember(null)}
+              role="presentation"
+            >
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="team-profile-title"
+                className="tm-modal tm-modal-shell relative flex w-full max-w-5xl flex-col overflow-hidden rounded-[22px] md:flex-row"
+                style={{
+                  background: "var(--sa-paper)",
+                  border: "1px solid rgba(217,189,138,0.55)",
+                  boxShadow:
+                    "0 40px 120px rgba(0,0,0,0.55), 0 0 0 6px rgba(168,127,74,0.10), inset 0 0 0 1px rgba(255,255,255,0.25)",
+                }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                {/* close */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedMember(null)}
+                  aria-label="Close team member details"
+                  className="tm-close absolute right-3 top-3 z-30 flex h-10 w-10 items-center justify-center rounded-full text-white"
+                  style={{
+                    background: "rgba(20,23,31,0.78)",
+                    border: "1px solid rgba(217,189,138,0.6)",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  <X size={18} />
+                </button>
+
+                {/* ---------- IMAGE PANEL (full image, never cropped) ---------- */}
+                <div
+                  className="relative h-[36%] w-full shrink-0 overflow-hidden md:h-full md:w-[44%]"
+                  style={{ background: "var(--sa-ink)" }}
+                >
+                  {/* blurred ambient backdrop made from the same photo */}
+                  <img
+                    src={selectedMember.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full scale-125 object-cover opacity-60 blur-2xl"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(160deg, rgba(20,23,31,0.35) 0%, rgba(20,23,31,0.75) 100%)",
+                    }}
+                  />
+
+                  {/* the actual photo — fully visible */}
+                  <div className="relative z-10 flex h-full w-full items-center justify-center p-4 md:p-8">
+                    <div
+                      className="relative flex h-full w-full items-center justify-center"
+                    >
+                      <img
+                        src={selectedMember.image}
+                        alt={selectedMember.name}
+                        className="tm-img max-h-full max-w-full rounded-xl object-contain"
+                        style={{
+                          boxShadow:
+                            "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(217,189,138,0.55)",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* crop marks */}
+                  <span className="crop-tick left-3 top-3 z-20 border-l-2 border-t-2" />
+                  <span className="crop-tick bottom-3 left-3 z-20 border-b-2 border-l-2" />
+
+                  {/* file tag */}
+                  <div
+                    className="sa-mono absolute bottom-3 right-3 z-20 hidden rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.2em] md:block"
+                    style={{
+                      background: "rgba(20,23,31,0.65)",
+                      color: "var(--sa-brass-light)",
+                      border: "1px solid rgba(217,189,138,0.35)",
+                      backdropFilter: "blur(4px)",
+                    }}
+                  >
+                    Dossier · {selectedMember.code}
+                  </div>
+                </div>
+
+                {/* ---------- CONTENT PANEL ---------- */}
+                <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden px-5 pb-5 pt-5 sm:px-8 sm:pb-7 sm:pt-7 md:px-10 md:pb-8 md:pt-9">
+                  {/* ghost index number */}
+                  <span
+                    className="sa-serif pointer-events-none absolute -right-2 -top-4 select-none text-[120px] font-bold leading-none md:text-[170px]"
+                    style={{ color: "rgba(168,127,74,0.10)" }}
+                    aria-hidden="true"
+                  >
+                    {selectedMember.code}
+                  </span>
+
+                  {/* eyebrow */}
+                  <div className="tm-up-1 relative flex items-center gap-3">
+                    <span
+                      className="sa-mono inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em]"
+                      style={{
+                        borderColor: "var(--sa-brass)",
+                        color: "var(--sa-brass)",
+                        background: "rgba(168,127,74,0.08)",
+                      }}
+                    >
+                      <span
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ background: "var(--sa-brass)" }}
+                      />
+                      {selectedMember.code}
+                    </span>
+                    <span
+                      className="tm-line h-px flex-1"
+                      style={{
+                        background:
+                          "linear-gradient(to right, var(--sa-brass), transparent)",
+                      }}
+                    />
+                  </div>
+
+                  {/* name + role */}
+                  <div className="tm-up-2 relative mt-4 shrink-0 pr-10 md:mt-5">
+                    <h2
+                      id="team-profile-title"
+                      className="sa-serif text-[26px] font-bold leading-[1.08] tracking-tight sm:text-3xl md:text-[40px]"
+                      style={{ color: "var(--sa-ink)" }}
+                    >
+                      {selectedMember.name}
+                    </h2>
+                    <p
+                      className="sa-mono mt-2 text-[11px] uppercase tracking-[0.2em] md:text-xs"
+                      style={{ color: "var(--sa-brass)" }}
+                    >
+                      {selectedMember.role}
+                    </p>
+                  </div>
+
+                  {/* divider ornament */}
+                  <div className="tm-up-3 relative my-4 flex shrink-0 items-center gap-2 md:my-5">
+                    <span
+                      className="h-px w-12"
+                      style={{ background: "var(--sa-brass)" }}
+                    />
+                    <span
+                      className="h-1.5 w-1.5 rotate-45"
+                      style={{ background: "var(--sa-brass)" }}
+                    />
+                    <span
+                      className="h-px flex-1"
+                      style={{ background: "var(--sa-line)" }}
+                    />
+                  </div>
+
+                  {/* description — fits the panel, no page-level scroll */}
+                  <div className="tm-up-4 tm-desc relative min-h-0 flex-1 overflow-y-auto pr-1">
+                    <p
+                      className="whitespace-pre-line text-[13px] leading-[1.75] sm:text-sm md:text-[15px]"
+                      style={{ color: "#333743" }}
+                    >
+                      {selectedMember.description}
+                    </p>
+                  </div>
+
+                  {/* expertise */}
+                  {!!selectedMember.skills?.length && (
+                    <div
+                      className="tm-up-5 relative mt-4 shrink-0 border-t pt-4 md:mt-5"
+                      style={{ borderColor: "var(--sa-line)" }}
+                    >
+                      <p
+                        className="sa-mono mb-2.5 text-[10px] uppercase tracking-[0.22em]"
+                        style={{ color: "var(--sa-brass)" }}
+                      >
+                        Expertise
+                      </p>
+
+                      <div className="flex max-h-[84px] flex-wrap gap-1.5 overflow-hidden md:max-h-none md:gap-2">
+                        {selectedMember.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="tm-chip rounded-full border px-3 py-1 text-[11px] md:text-xs"
+                            style={{
+                              borderColor: "rgba(168,127,74,0.5)",
+                              color: "var(--sa-ink)",
+                              background: "rgba(255,255,255,0.35)",
+                            }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>
