@@ -243,12 +243,12 @@ export default function Footer() {
               <a
   onClick={() =>
     (window.location.href =
-      "mailto:mohdaslam700@gmail.com?subject=Interior%20Design%20Inquiry&body=Hello%2C%20I%20want%20to%20know%20about%20your%20interior%20design%20services.")
+      "mailto: maarchitects.india@gmail.com?subject=Interior%20Design%20Inquiry&body=Hello%2C%20I%20want%20to%20know%20about%20your%20interior%20design%20services.")
   }
   className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition cursor-pointer"
 >
   <Mail size={18} />
-  <span>mohdaslam700@gmail.com</span>
+  <span> maarchitects.india@gmail.com</span>
 </a>
 
               <a
