@@ -220,52 +220,52 @@ export default function Footer() {
 
           {/* Contact */}
 
-          <motion.div
-            initial={{ opacity:0, y:40 }}
-            whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.9 }}
-          >
+         {/* Contact */}
 
-            <h3 className="text-white font-semibold text-lg mb-6">
-              Contact Us
-            </h3>
-
-            <div className="space-y-4">
-
-              <a
-                href="tel:+919411096122"
-                className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition"
-              >
-                <Phone size={18}/>
-                <span>+91-9411096122</span>
-              </a>
-
-              <a
-  onClick={() =>
-    (window.location.href =
-      "mailto: maarchitects.india@gmail.com?subject=Interior%20Design%20Inquiry&body=Hello%2C%20I%20want%20to%20know%20about%20your%20interior%20design%20services.")
-  }
-  className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition cursor-pointer"
+<motion.div
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.9 }}
 >
-  <Mail size={18} />
-  <span> maarchitects.india@gmail.com</span>
-</a>
+  <h3 className="text-white font-semibold text-lg mb-6">
+    Contact Us
+  </h3>
 
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=25+Avas+Vikas+Civil+Lines+Moradabad+244001"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition"
-              >
-                <MapPin size={18}/>
-                <span>
-                  25, Avas Vikas, Civil Lines, Moradabad-244001
-                </span>
-              </a>
+  <div className="space-y-4">
 
-            </div>
+    {/* Phone */}
+    <a
+      href="tel:+919411096122"
+      className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition"
+    >
+      <Phone className="w-5 h-5 shrink-0" />
+      <span>+91-9411096122</span>
+    </a>
 
-          </motion.div>
+    {/* Email */}
+    <a
+      href="mailto:maarchitects.india@gmail.com?subject=Interior%20Design%20Inquiry&body=Hello%2C%20I%20want%20to%20know%20about%20your%20interior%20design%20services."
+      className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition"
+    >
+      <Mail className="w-5 h-5 shrink-0" />
+      <span>maarchitects.india@gmail.com</span>
+    </a>
+
+    {/* Location */}
+    <a
+      href="https://www.google.com/maps/search/?api=1&query=25+Avas+Vikas+Civil+Lines+Moradabad+244001"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center justify-center md:justify-start gap-3 hover:text-yellow-500 transition"
+    >
+      <MapPin className="w-5 h-5 shrink-0" />
+      <span>
+        25, Avas Vikas, Civil Lines, Moradabad-244001
+      </span>
+    </a>
+
+  </div>
+</motion.div>
 
         </div>
 
